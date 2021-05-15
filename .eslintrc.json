@@ -1,0 +1,32 @@
+{
+  "root": true,
+  "env": {
+    "commonjs": true,
+    "es2020": true,
+    "node": true
+  },
+  "extends": [
+    "airbnb-base"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 11
+  },
+  "rules": {
+    "comma-dangle": [
+      "error",
+      "never"
+    ],
+    "camelcase": [
+      0,
+      {
+        "properties": "never"
+      }
+    ],
+    "no-param-reassign": [
+      2,
+      {
+        "props": false
+      }
+    ]
+  }
+}
