@@ -8,20 +8,4 @@ router.post(
     TestController.createNewTest
 );
 
-// router.get(
-//     '/edit/:id',
-//     UserController.getUserById
-// );
-
-// router.put(
-//     '/update/:id',
-//     UserController.updateUserDetailById
-// );
-
-// router.delete(
-//     '/delete/:id',
-//     UserController.deleteUserById
-// );
-
-
 module.exports = router;

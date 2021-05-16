@@ -3,6 +3,4 @@ build
 npm-debug.log
 .DS_Store
 
-/static/uploads
-/public
 /coverage
