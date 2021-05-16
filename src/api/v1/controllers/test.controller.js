@@ -89,13 +89,92 @@ module.exports = {
     /**
     * Get Test By Id
     */
+    getTestById: async (req, res) => {
+        try {
+            const testId = req.params.id;
+            let test = await TestService.checkIfTestExistsWithId(testId);
+            test = test ? test.get({ plain: true }) : null;
+            if (!test) {
+                throw new ApiError.ValidationError(MessageConstants.TEST_NOT_PRESENT);
+            };
+            let tests = await TestService.getTestById(testId);
+            return res.status(StatusCodesConstants.SUCCESS).json(Response.sendSuccess(
+                MessageConstants.TEST_FETCHED_SUCCESSFULLY,
+                tests,
+                StatusCodesConstants.SUCCESS
+            ));
+        } catch ({ message, code = StatusCodesConstants.INTERNAL_SERVER_ERROR, error = {} }) {
+            Chalk.error(message, { message, code, error });
+            return res.status(code).json(Response.sendError(
+                message,
+                error,
+                code
+            ));
+        }
+    },
 
     /**
-    * Update Test By Id
+    * Get List of Tests By User Id
     */
+    getAllTestOfUser: async (req, res) => {
+        try {
+            const reqBody = req.body;
+            let filters = {
+                // keyword: (reqBody.keyword || '').trim(),
+                user_id: req.params.id,
+                limit: Number(reqBody.per_page) || QueryConstants.LIMIT,
+                page: Number(reqBody.page) || QueryConstants.CURRENT_PAGE,
+                offset: Number(reqBody.offset) || QueryConstants.OFFSET,
+                sortBy: reqBody.sortBy || QueryConstants.TEST_SORT_BY[0],
+                sortType: reqBody.sortType || QueryConstants.TEST_SORT_TYPES[0]
+            };
+            filters.offset = (filters.page - 1) * filters.limit;
+            let data = { pages: 0, total_count: 0, records: [] };
+            console.log('filters', filters)
+            const tests = await TestService.getAllTestOfUser(filters);
+            data['pages'] = Math.ceil(tests.count / filters.limit);
+            data['total_count'] = tests.count;
+            data['records'] = tests.rows;
+            return res.status(StatusCodesConstants.SUCCESS).json(Response.sendSuccess(
+                MessageConstants.TEST_FETCHED_SUCCESSFULLY,
+                data,
+                StatusCodesConstants.SUCCESS
+            ));
+        } catch ({ message, code = StatusCodesConstants.INTERNAL_SERVER_ERROR, error = {} }) {
+            Chalk.error(message, { message, code, error });
+            return res.status(code).json(Response.sendError(
+                message,
+                error,
+                code
+            ));
+        }
+    },
 
     /**
     * Delete Test By Id
     */
+    deleteTestById: async (req, res) => {
+        try {
+            const testId = req.params.id;
+            let test = await TestService.checkIfTestExistsWithId(testId);
+            test = test ? test.get({ plain: true }) : null;
+            if (!test) {
+                throw new ApiError.ValidationError(MessageConstants.TEST_NOT_PRESENT);
+            };
+            await TestService.deleteTestById(testId);
+            return res.status(StatusCodesConstants.SUCCESS).json(Response.sendSuccess(
+                MessageConstants.TEST_DELETED,
+                {},
+                StatusCodesConstants.SUCCESS
+            ));
+        } catch ({ message, code = StatusCodesConstants.INTERNAL_SERVER_ERROR, error = {} }) {
+            Chalk.error(message, { message, code, error });
+            return res.status(code).json(Response.sendError(
+                message,
+                error,
+                code
+            ));
+        }
+    },
 
 };

@@ -11,8 +11,12 @@ module.exports = Object.freeze({
   USER_SORT_BY: ['created_at', 'name', 'first_name', 'last_name', 'email', 'mobile_number', 'status'],
   USER_SORT_TYPES: ['DESC', 'DESC'],
 
-  // location of labs
+  // labs
   LAB_SORT_BY: ['name'],
   LAB_SORT_TYPES: ['ASC', 'DESC'],
+
+  // test
+  TEST_SORT_BY: ['schedule_date'],
+  TEST_SORT_TYPES: ['ASC', 'DESC'],
 
 });

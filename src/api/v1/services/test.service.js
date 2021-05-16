@@ -56,16 +56,65 @@ const TestService = {
     },
 
     /**
-    * Get Test By Id
+    * Check whether the Test exits by id
     */
+    checkIfTestExistsWithId: (id) => Test.findOne({
+        where: { id }, attributes: { exclude: ['deleted_at'] }
+    }),
 
     /**
-    * Update Test by id
+    * Get Test By Id
     */
+    getTestById: (testId) => Test.findOne({
+        where: { id: testId },
+        attributes: { exclude: ['created_at', 'updated_at', 'deleted_at'] }
+    }),
+
+    /**
+    * Get List of Tests By User Id
+    */
+    getAllTestOfUser: ({
+        // keyword,
+        user_id, limit, offset, sortBy, sortType
+    }) => {
+        let orderBy = null;
+        if (sortBy && sortType) {
+            orderBy = {
+                order: [
+                    [sortBy, sortType]
+                ]
+            };
+        };
+
+        return Test.findAndCountAll({
+            where: {
+                // [Op.and]: [
+                // ],
+                ...(user_id && { user_id: user_id })
+            },
+            attributes: { exclude: [] },
+            ...(!!orderBy && orderBy),
+            offset,
+            limit,
+            distinct: true
+        })
+    },
 
     /**
     * Delete Test By Id
     */
+    deleteTestById: async (testId) => {
+        const transaction = await sequelize.transaction();
+        try {
+            await Test.destroy({ where: { id: testId }, transaction });
+            transaction.commit();
+        } catch (error) {
+            if (transaction) {
+                await transaction.rollback();
+            };
+            throw new Error((error && error.message) || MessageConstants.INTERNAL_SERVER_ERROR);
+        }
+    },
 
 };
 

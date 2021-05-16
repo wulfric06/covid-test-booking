@@ -50,6 +50,7 @@ module.exports = Object.freeze({
   TEST_ADD_SUCCESSFULLY: 'Test booked successfully',
   TEST_UPDATE_SUCCESSFULLY: 'Test updated successfully',
   TEST_DELETED: 'Test deleted successfully',
+  TEST_NOT_PRESENT: 'Test does not Exist',
 
 
 });
