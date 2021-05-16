@@ -38,5 +38,18 @@ module.exports = Object.freeze({
   USER_DELETED: 'User deleted successfully',
   EMP_ID_ALREADY_REGISTERED: 'Employee id is already registered',
 
+  // lab 
+  LAB_FETCHED_SUCCESSFULLY: 'Lab fetched successfully',
+  // LAB_ALREADY_REGISTERED: 'Lab is already registered',
+  LAB_ADD_SUCCESSFULLY: 'Lab added successfully',
+  LAB_UPDATE_SUCCESSFULLY: 'Lab updated successfully',
+  LAB_DELETED: 'Lab deleted successfully',
+
+  // test 
+  TEST_FETCHED_SUCCESSFULLY: 'Test fetched successfully',
+  TEST_ADD_SUCCESSFULLY: 'Test booked successfully',
+  TEST_UPDATE_SUCCESSFULLY: 'Test updated successfully',
+  TEST_DELETED: 'Test deleted successfully',
+
 
 });

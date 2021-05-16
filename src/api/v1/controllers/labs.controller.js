@@ -20,6 +20,42 @@ const {
 module.exports = {
 
     /**
+    * Get All Labs
+    */
+    getAllLabs: async (req, res) => {
+        try {
+            const reqBody = req.body;
+            let filters = {
+                keyword: (reqBody.keyword || '').trim(),
+                limit: Number(reqBody.per_page) || QueryConstants.LIMIT,
+                page: Number(reqBody.page) || QueryConstants.CURRENT_PAGE,
+                offset: Number(reqBody.offset) || QueryConstants.OFFSET,
+                sortBy: reqBody.sortBy || QueryConstants.LAB_SORT_BY[0],
+                sortType: reqBody.sortType || QueryConstants.LAB_SORT_TYPES[0]
+            };
+            filters.offset = (filters.page - 1) * filters.limit;
+            let data = { pages: 0, total_count: 0, records: [] };
+            console.log('filters', filters)
+            const labs = await LabService.getAllLabs(filters);
+            data['pages'] = Math.ceil(labs.count / filters.limit);
+            data['total_count'] = labs.count;
+            data['records'] = labs.rows;
+            return res.status(StatusCodesConstants.SUCCESS).json(Response.sendSuccess(
+                MessageConstants.LAB_FETCHED_SUCCESSFULLY,
+                data,
+                StatusCodesConstants.SUCCESS
+            ));
+        } catch ({ message, code = StatusCodesConstants.INTERNAL_SERVER_ERROR, error = {} }) {
+            Chalk.error(message, { message, code, error });
+            return res.status(code).json(Response.sendError(
+                message,
+                error,
+                code
+            ));
+        }
+    },
+
+    /**
     * Create New Lab
     */
 

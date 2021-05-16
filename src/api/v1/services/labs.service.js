@@ -28,7 +28,43 @@ const LabService = {
     /**
     * Check whether the Lab exits by id
     */
-   
+
+    /**
+    * Get All Labs
+    */
+    getAllLabs: ({
+        keyword, limit, offset, sortBy, sortType
+    }) => {
+        let orderBy = null;
+        if (sortBy && sortType) {
+            orderBy = {
+                order: [
+                    [sortBy, sortType]
+                ]
+            };
+        };
+        // add search criteria
+        let searchCriteria = {};
+        if (keyword) {
+            searchCriteria = Sequelize.where(Sequelize.fn('trim', Sequelize.col('name')), {
+                [Op.substring]: keyword
+            });
+        };
+        // console.log('searchCriteria', searchCriteria)
+        return Lab.findAndCountAll({
+            where: {
+                [Op.and]: [
+                    searchCriteria
+                ]
+            },
+            attributes: { exclude: [] },
+            ...(!!orderBy && orderBy),
+            offset,
+            limit,
+            distinct: true
+        })
+    },
+
     /**
     * Create New Lab
     */

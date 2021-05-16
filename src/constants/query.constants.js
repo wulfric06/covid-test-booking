@@ -12,7 +12,7 @@ module.exports = Object.freeze({
   USER_SORT_TYPES: ['DESC', 'DESC'],
 
   // location of labs
-  LOCATION_SORT_BY: ['name'],
-  LOCATION_SORT_TYPES: ['ASC', 'DESC'],
+  LAB_SORT_BY: ['name'],
+  LAB_SORT_TYPES: ['ASC', 'DESC'],
 
 });

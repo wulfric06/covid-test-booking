@@ -5,10 +5,16 @@ const newPath = require('path').resolve;
 const storage = multer.diskStorage({
   destination(req, file, cb) {
     if (file.fieldname === 'profile') {
-      const destination = newPath('static/uploads');
+      const destination = newPath('public/uploads/profile');
+      cb(null, destination);
+    } else if (file.fieldname === 'image') {
+      const destination = newPath('public/uploads/prescription');
+      cb(null, destination);
+    } else if (file.fieldname === 'lab_img') {
+      const destination = newPath('public/uploads/lab');
       cb(null, destination);
     } else {
-      const destination = path.join(__dirname, `../../../../${process.env.DIR_NAME}`);
+      const destination = path.join(__dirname, `../../../../${process.env.DIR_NAME}/others`);
       cb(null, destination);
     }
   },
