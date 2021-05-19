@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 const moment = require('moment');
 const {
     Lab,
+    Test,
     sequelize
 } = require('../../../../models');
 const {
@@ -80,6 +81,36 @@ const LabService = {
     /**
     * Delete Lab By Id
     */
+
+    /**
+     * Get Booking Details By Lab Id
+     */
+    getBookingDetailsForLab: ({
+        // keyword,
+        lab_id, limit, offset, sortBy, sortType
+    }) => {
+        let orderBy = null;
+        if (sortBy && sortType) {
+            orderBy = {
+                order: [
+                    [sortBy, sortType]
+                ]
+            };
+        };
+
+        return Test.findAndCountAll({
+            where: {
+                // [Op.and]: [
+                // ],
+                ...(lab_id && { lab_id: lab_id })
+            },
+            attributes: { exclude: [] },
+            ...(!!orderBy && orderBy),
+            offset,
+            limit,
+            distinct: true
+        })
+    },
 
 };
 

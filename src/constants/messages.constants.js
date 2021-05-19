@@ -44,6 +44,7 @@ module.exports = Object.freeze({
   LAB_ADD_SUCCESSFULLY: 'Lab added successfully',
   LAB_UPDATE_SUCCESSFULLY: 'Lab updated successfully',
   LAB_DELETED: 'Lab deleted successfully',
+  LAB_BOOKING_FETCHED_SUCCESSFULLY: 'Booking fetched successfully for this lab',
 
   // test 
   TEST_FETCHED_SUCCESSFULLY: 'Test fetched successfully',
