@@ -34,6 +34,10 @@ module.exports = (sequelize, DataTypes) => {
             unique: true,
             type: DataTypes.STRING(20)
         },
+        address: {
+            allowNull: false,
+            type: DataTypes.STRING
+        },
         blood_group: {
             allowNull: false,
             type: DataTypes.STRING
@@ -48,10 +52,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         schedule_date: {
             type: DataTypes.STRING(20)
-        },
-        image: {
-            allowNull: false,
-            type: DataTypes.STRING
         }
     }, {
         tableName: 'tests',

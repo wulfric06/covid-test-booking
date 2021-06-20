@@ -28,7 +28,7 @@ const TestService = {
         const transaction = await sequelize.transaction();
         try {
             const createdTest = await Test.create(testToBeCreated, {
-                ...(transaction && { transaction })
+                ...(transaction && { transaction }),
             });
 
             transaction.commit();
@@ -39,19 +39,21 @@ const TestService = {
                 full_name: createdTest.full_name,
                 age: createdTest.age,
                 mobile_number: createdTest.mobile_number,
+                address: createdTest.address,
                 blood_group: createdTest.mobile_number,
                 test_type: createdTest.test_type,
                 time: createdTest.time,
                 schedule_date: createdTest.schedule_date,
-                image: createdTest.image,
                 created_at: createdTest.created_at,
-                updated_at: createdTest.updated_at
+                updated_at: createdTest.updated_at,
             };
         } catch (error) {
             if (transaction) {
                 await transaction.rollback();
-            };
-            throw new Error((error && error.message) || MessageConstants.INTERNAL_SERVER_ERROR);
+            }
+            throw new Error(
+                (error && error.message) || MessageConstants.INTERNAL_SERVER_ERROR
+            );
         }
     },
 

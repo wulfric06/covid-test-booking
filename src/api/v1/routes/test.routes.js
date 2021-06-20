@@ -4,7 +4,6 @@ const { MulterMiddleware } = require('../middlewares');
 
 router.post(
     '/create',
-    MulterMiddleware.upload.single('image'),
     TestController.createNewTest
 );
 
